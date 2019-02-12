@@ -19,17 +19,7 @@ node {
       }
     }
     
-     stage('publish') {
-    def uploadSpec = """{
-      "files": [
-        {
-          "pattern": "complete/build/libs/gs-gradle-*.jar",
-          "target": "gradle-dev-local/jenkinsnew/gs-gradle/1.0/gs-gradle-1.0-docker.jar"
-        }
-     ]
-    }"""
-    server.upload(uploadSpec)
-  }
+   
      stage ('slack notification')
     {
      slackSend baseUrl: 'https://hooks.slack.com/services/', 
