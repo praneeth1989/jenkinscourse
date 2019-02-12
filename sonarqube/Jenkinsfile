@@ -18,4 +18,14 @@ node {
         sh "${sonarqubeScannerHome}/bin/sonar-scanner -e -Dsonar.host.url=http://3.92.228.164:9000 -Dsonar.login=${sonarLogin} -Dsonar.projectName=gs-gradle -Dsonar.projectVersion=${env.BUILD_NUMBER} -Dsonar.projectKey=GS -Dsonar.sources=complete/src/main/ -Dsonar.tests=complete/src/test/ -Dsonar.java.binaries=complete/src/test/ -Dsonar.language=java"
       }
     }
+     stage ('slack notification')
+    {
+     slackSend baseUrl: 'https://hooks.slack.com/services/', 
+               channel: '#devops', 
+               color: 'good', 
+               message: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})",
+               teamDomain: 'attics', 
+               token: 'TFY1Y9E48/BG06VAN14/V0KHFB7aRdvMg22oaBjFUQ2r', 
+               tokenCredentialId: 'slack-alerts'   
+    }
 }
