@@ -29,7 +29,7 @@ node {
      slackSend baseUrl: 'https://hooks.slack.com/services/', 
                channel: '#devops', 
                color: 'good', 
-               message: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})" 
+               message: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})",
                teamDomain: 'attics', 
                token: 'TFY1Y9E48/BG06VAN14/V0KHFB7aRdvMg22oaBjFUQ2r', 
                tokenCredentialId: 'slack-alerts'   
