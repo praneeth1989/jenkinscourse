@@ -1,4 +1,3 @@
-
 node {
 
   // job
@@ -10,13 +9,12 @@ node {
       println('A test has passed!')
       sh 'exit 0'
     }
-  }
-  catch(f) {
-    // mark build as failed
-    currentBuild.result1 = "SUCCESS";
+  } catch(e) {    
+currentBuild.result = "SUCCESS";
     // send slack notification
-    slackSend (color: '#FF0000', message: "PASSED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+    slackSend (color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+     slackSend (color: '#FF0000', message: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
     // throw the error
-    throw f;
-}
+    throw e;
+  }
 }
