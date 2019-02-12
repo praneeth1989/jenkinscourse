@@ -1,16 +1,20 @@
 node {
-def call(String buildResult) {
-  if ( buildResult == "SUCCESS" ) {
-    slackSend color: "good", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was successful"
+  // job
+  try {
+    stage('build') {
+      println('so far so good...')
+    }
+    stage('test') {
+      println('A test has passed!')
+      sh 'exit 0'
+    }
+  } 
+  catch(e) {
+    // mark build as failed
+    currentBuild.result = "SUCCESS";
+    // send slack notification
+     slackSend (color: '#FF0000', message: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+    // throw the error
+    throw e;
   }
-  else if( buildResult == "FAILURE" ) { 
-    slackSend color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was failed"
-  }
-  else if( buildResult == "UNSTABLE" ) { 
-    slackSend color: "warning", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was unstable"
-  }
-  else {
-    slackSend color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} its resulat was unclear"	
-  }
-}
 }
