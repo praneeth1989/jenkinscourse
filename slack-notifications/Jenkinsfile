@@ -8,14 +8,22 @@ node {
     }
     stage('test') {
       println('A test has passed!')
-      sh 'exit 1'
+      sh 'exit 0'
     }
   } catch(e) {
     // mark build as failed
     currentBuild.result = "FAILURE";
+    currentbuild.result1 = "SUCCESS";
     // send slack notification
     slackSend (color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
     // throw the error
     throw e;
   }
+  catch(f) {
+    // mark build as failed
+    currentBuild.result1 = "SUCCESS";
+    // send slack notification
+    slackSend (color: '#FF0000', message: "PASSED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+    // throw the error
+    throw f;
 }
