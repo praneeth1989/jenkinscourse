@@ -4,9 +4,6 @@ node {
   try {
     stage('build') {
       println('so far so good...')
-    }
-    stage('test') {
-      println('A test has passed!')
       sh 'exit 1'
     }
   } catch(e) {    
