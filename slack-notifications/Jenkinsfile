@@ -6,16 +6,17 @@ node {
       println('so far so good...')
     }
     stage('test') {
-      println('A test has failed!')
-      sh 'exit 1'
+      println('A test has passed!')
+      sh 'exit 0'
     }
   } catch(e) {
     // mark build as failed
     currentBuild.result = "FAILURE";
-
+    
+currentBuild.result = "SUCCESS";
     // send slack notification
     slackSend (color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-
+     slackSend (color: '#FF0000', message: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
     // throw the error
     throw e;
   }
