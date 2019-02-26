@@ -22,17 +22,7 @@ node {
       }
     }
     
-    stage ('Artifactory configuration & Publish') {
-        rtGradle.tool = 'gradle' // Tool name from Jenkins configuration
-        rtGradle.deployer repo:'gradle-dev-local',  server: server
-        rtGradle.resolver repo:'gradle-dev', server: server
-            buildInfo.env.capture = true
-            buildInfo.env.filter.addInclude("*")
-            rtGradle.usesPlugin = true // Artifactory plugin already defined in build script
-            rtGradle.run rootDir: "artifactory/", buildFile: 'build.gradle', tasks: 'clean artifactoryPublish', buildInfo: buildInfo
-            server.publishBuildInfo buildInfo
-    }
-   
+    
      stage ('slack notification')
     {
      slackSend baseUrl: 'https://hooks.slack.com/services/', 
